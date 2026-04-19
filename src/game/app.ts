@@ -10,37 +10,16 @@ export async function mountApp(root: HTMLDivElement) {
   shell.className = "app-shell";
 
   shell.innerHTML = `
-    <header class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Web Vertical Slice Prototype</p>
-        <h1>SkyRush: Neon Circuit</h1>
-        <p class="lede">
-          Browser-first adaptation of the hoverbike racer GDD with a controllable movement sandbox,
-          reactive procedural audio, and generated placeholder art.
-        </p>
-        <div class="hero-actions">
-          <button class="primary-action" type="button">Start Prototype Audio</button>
-          <span class="input-note">Drive with WASD or arrow keys. Drift with Space, boost with Shift, reset with R.</span>
-        </div>
-      </div>
-      <aside class="project-panel">
-        <h2>Movement Sandbox</h2>
-        <ul>
-          <li>Acceleration, braking, and lane control</li>
-          <li>Arcade drift state with sharper steering</li>
-          <li>Rechargeable three-charge boost system</li>
-          <li>Reactive chase camera and audio</li>
-        </ul>
-      </aside>
-    </header>
-    <main class="layout">
-      <section class="viewport-card">
-        <div class="section-head">
-          <h2>Playable Prototype</h2>
-          <p>Phase 1 sandbox for validating the hoverbike feel before laps, AI, and race flow come online.</p>
-        </div>
-        <div class="viewport-frame">
-          <div class="hud-overlay">
+    <main class="game-shell">
+      <div class="viewport-frame">
+        <canvas class="game-canvas" aria-label="Prototype game viewport"></canvas>
+
+        <header class="game-header">
+          <div class="brand-block">
+            <p class="eyebrow">SkyRush Prototype</p>
+            <h1>Neon Circuit</h1>
+          </div>
+          <div class="hud-cluster">
             <div class="hud-chip">
               <span class="hud-label">Speed</span>
               <strong class="hud-value" data-speed>000 KPH</strong>
@@ -54,37 +33,52 @@ export async function mountApp(root: HTMLDivElement) {
               <strong class="hud-value" data-state>Cruise</strong>
             </div>
           </div>
-          <canvas class="game-canvas" aria-label="Prototype game viewport"></canvas>
-        </div>
-      </section>
-      <section class="sidebar">
-        <article class="info-card">
-          <h2>Racers</h2>
-          <div class="racer-grid"></div>
-        </article>
-        <article class="info-card">
-          <h2>Track</h2>
-          <div class="track-summary"></div>
-        </article>
-        <article class="info-card">
-          <h2>Controls</h2>
-          <div class="controls-list">
-            <div><span>Throttle</span><strong>W / Up</strong></div>
-            <div><span>Brake</span><strong>S / Down</strong></div>
-            <div><span>Steer</span><strong>A D / Left Right</strong></div>
-            <div><span>Drift</span><strong>Space</strong></div>
-            <div><span>Boost</span><strong>Shift</strong></div>
-            <div><span>Reset</span><strong>R</strong></div>
+        </header>
+
+        <aside class="session-panel">
+          <div class="session-card session-card-primary">
+            <span class="session-kicker">Current Slice</span>
+            <strong class="session-title" data-section>Downtown Launch</strong>
+            <p class="session-copy">
+              Fullscreen movement prototype for validating speed, drift, boost, and track readability.
+            </p>
           </div>
-        </article>
-        <article class="info-card">
-          <h2>Prototype Notes</h2>
-          <p>
-            This slice intentionally focuses on feel first. The next build step after this should be
-            checkpoints, lap flow, and a longer greybox course.
-          </p>
-        </article>
-      </section>
+          <div class="session-card">
+            <span class="session-kicker">Course Progress</span>
+            <strong class="session-title" data-distance>000 m</strong>
+            <p class="session-copy" data-recovery>Clean run</p>
+          </div>
+          <div class="session-card">
+            <span class="session-kicker">Controls</span>
+            <div class="controls-list">
+              <div><span>Throttle</span><strong>W / Up</strong></div>
+              <div><span>Brake</span><strong>S / Down</strong></div>
+              <div><span>Steer</span><strong>A D / Arrows</strong></div>
+              <div><span>Drift</span><strong>Space</strong></div>
+              <div><span>Boost</span><strong>Shift</strong></div>
+              <div><span>Reset</span><strong>R</strong></div>
+            </div>
+          </div>
+        </aside>
+
+        <footer class="bottom-strip">
+          <section class="bottom-card">
+            <div class="bottom-head">
+              <h2>Racers</h2>
+              <span>Phase 4 tuning</span>
+            </div>
+            <div class="racer-grid"></div>
+          </section>
+          <section class="bottom-card track-card">
+            <div class="bottom-head">
+              <h2>Helix City Circuit</h2>
+              <button class="primary-action" type="button">Start Audio</button>
+            </div>
+            <div class="track-summary"></div>
+            <p class="input-note">Next plan step: replace this runway loop with a greybox checkpoint course.</p>
+          </section>
+        </footer>
+      </div>
     </main>
   `;
 
@@ -97,8 +91,22 @@ export async function mountApp(root: HTMLDivElement) {
   const speedValue = shell.querySelector<HTMLElement>("[data-speed]");
   const boostValue = shell.querySelector<HTMLElement>("[data-boost]");
   const stateValue = shell.querySelector<HTMLElement>("[data-state]");
+  const sectionValue = shell.querySelector<HTMLElement>("[data-section]");
+  const distanceValue = shell.querySelector<HTMLElement>("[data-distance]");
+  const recoveryValue = shell.querySelector<HTMLElement>("[data-recovery]");
 
-  if (!racerGrid || !trackSummary || !canvas || !audioButton || !speedValue || !boostValue || !stateValue) {
+  if (
+    !racerGrid ||
+    !trackSummary ||
+    !canvas ||
+    !audioButton ||
+    !speedValue ||
+    !boostValue ||
+    !stateValue ||
+    !sectionValue ||
+    !distanceValue ||
+    !recoveryValue
+  ) {
     throw new Error("Failed to build prototype UI.");
   }
 
@@ -116,6 +124,9 @@ export async function mountApp(root: HTMLDivElement) {
     speedValue.textContent = `${Math.round(telemetry.speedKph).toString().padStart(3, "0")} KPH`;
     boostValue.textContent = `${telemetry.boostCharges.toFixed(1)} / 3`;
     stateValue.textContent = telemetry.boosting ? "Boost" : telemetry.drifting ? "Drift" : "Cruise";
+    sectionValue.textContent = telemetry.section;
+    distanceValue.textContent = `${Math.round(telemetry.distance).toString().padStart(3, "0")} m`;
+    recoveryValue.textContent = telemetry.recoveryHint ?? "Clean run";
     if (audio.isRunning()) {
       audio.update({
         speedRatio: Math.min(telemetry.speedKph / 360, 1),

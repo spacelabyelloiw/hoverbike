@@ -28,35 +28,11 @@ button {
 }
 
 .app-shell {
-  width: min(1400px, calc(100vw - 32px));
-  margin: 0 auto;
-  padding: 24px 0 48px;
+  min-height: 100vh;
 }
 
-.hero {
-  display: grid;
-  grid-template-columns: 1.8fr 1fr;
-  gap: 20px;
-  align-items: stretch;
-  margin-bottom: 24px;
-}
-
-.hero-copy,
-.project-panel,
-.viewport-card,
-.info-card {
-  border: 1px solid rgba(125, 211, 255, 0.18);
-  background: linear-gradient(180deg, rgba(11, 20, 37, 0.92), rgba(8, 13, 24, 0.94));
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
-  border-radius: 24px;
-}
-
-.hero-copy {
-  padding: 28px;
-}
-
-.project-panel {
-  padding: 24px;
+.game-shell {
+  min-height: 100vh;
 }
 
 .eyebrow {
@@ -87,13 +63,6 @@ h1 {
   font-size: 1.02rem;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-}
-
 .primary-action {
   border: 0;
   border-radius: 999px;
@@ -109,33 +78,10 @@ h1 {
   font-size: 0.92rem;
 }
 
-.project-panel ul {
-  padding-left: 18px;
-  margin-bottom: 0;
-  color: #bfd6ef;
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: 20px;
-}
-
-.viewport-card,
-.info-card {
-  padding: 18px;
-}
-
-.section-head p {
-  color: #8ca8c4;
-}
-
 .viewport-frame {
   position: relative;
   overflow: hidden;
-  border-radius: 18px;
-  min-height: 520px;
-  border: 1px solid rgba(125, 211, 255, 0.12);
+  min-height: 100vh;
   background:
     linear-gradient(180deg, rgba(16, 31, 56, 0.5), rgba(7, 12, 22, 0.95)),
     radial-gradient(circle at top, rgba(255, 126, 71, 0.15), transparent 28%);
@@ -144,17 +90,34 @@ h1 {
 .game-canvas {
   display: block;
   width: 100%;
-  height: 520px;
+  height: 100vh;
 }
 
-.hud-overlay {
+.game-header {
   position: absolute;
-  inset: 14px 14px auto 14px;
+  inset: 18px 20px auto 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  z-index: 1;
+}
+
+.brand-block {
+  max-width: 360px;
+}
+
+.brand-block h1 {
+  margin-bottom: 0;
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+}
+
+.hud-cluster {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 10px;
-  z-index: 1;
-  pointer-events: none;
 }
 
 .hud-chip {
@@ -179,14 +142,87 @@ h1 {
   font-size: 1rem;
 }
 
-.sidebar {
+.session-panel {
+  position: absolute;
+  top: 120px;
+  left: 20px;
+  z-index: 1;
+  width: min(320px, calc(100vw - 40px));
   display: grid;
   gap: 18px;
 }
 
+.session-card,
+.bottom-card {
+  border: 1px solid rgba(125, 211, 255, 0.18);
+  background: linear-gradient(180deg, rgba(11, 20, 37, 0.84), rgba(8, 13, 24, 0.84));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+  border-radius: 22px;
+  backdrop-filter: blur(10px);
+}
+
+.session-card {
+  padding: 16px;
+}
+
+.session-card-primary {
+  border-color: rgba(255, 126, 71, 0.3);
+}
+
+.session-kicker {
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.74rem;
+  color: #8ca8c4;
+}
+
+.session-title {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+}
+
+.session-copy {
+  margin-bottom: 0;
+  color: #bfd6ef;
+}
+
+.bottom-strip {
+  position: absolute;
+  inset: auto 20px 18px 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.95fr);
+  gap: 16px;
+  z-index: 1;
+}
+
+.bottom-card {
+  padding: 18px;
+}
+
+.bottom-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.bottom-head h2 {
+  margin-bottom: 0;
+}
+
+.bottom-head span {
+  color: #8ca8c4;
+  font-size: 0.85rem;
+}
+
 .racer-grid {
   display: grid;
-  gap: 12px;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .racer-card {
@@ -280,19 +316,27 @@ h1 {
 }
 
 @media (max-width: 960px) {
-  .hero,
-  .layout {
+  .game-header {
+    inset: 12px 12px auto 12px;
+  }
+
+  .session-panel {
+    top: 104px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+
+  .bottom-strip {
+    inset: auto 12px 12px 12px;
     grid-template-columns: 1fr;
   }
 
-  .app-shell {
-    width: min(100vw - 20px, 1400px);
-    padding-top: 10px;
+  .racer-grid {
+    grid-template-columns: 1fr;
   }
 
-  .viewport-frame,
-  .game-canvas {
-    min-height: 360px;
-    height: 360px;
+  .track-card {
+    order: -1;
   }
 }

@@ -3,7 +3,10 @@ import * as THREE from "three";
 export type PrototypeTelemetry = {
   boostCharges: number;
   boosting: boolean;
+  distance: number;
   drifting: boolean;
+  recoveryHint: string | null;
+  section: string;
   speedKph: number;
   steering: number;
 };
@@ -14,6 +17,16 @@ type PrototypeOptions = {
 
 const TRACK_HALF_WIDTH = 2.55;
 const MAX_BOOST_CHARGES = 3;
+const COURSE_LENGTH = 420;
+const COURSE_SECTIONS = [
+  { maxDistance: 70, label: "Downtown Launch" },
+  { maxDistance: 130, label: "Building Thread" },
+  { maxDistance: 200, label: "Transit Ramp Rise" },
+  { maxDistance: 265, label: "Skybridge Loop" },
+  { maxDistance: 330, label: "Rooftop Dash" },
+  { maxDistance: 380, label: "Interior Dive" },
+  { maxDistance: 420, label: "Grand Helix Finale" },
+];
 
 export function createPrototypeScene(
   renderer: THREE.WebGLRenderer,
@@ -202,6 +215,7 @@ export function createPrototypeScene(
   const state = {
     boostCharges: MAX_BOOST_CHARGES,
     distance: 0,
+    recoveryHint: null as string | null,
     speed: 16,
     x: 0,
     yaw: 0,
@@ -300,6 +314,7 @@ export function createPrototypeScene(
       state.x = THREE.MathUtils.clamp(state.x, -TRACK_HALF_WIDTH, TRACK_HALF_WIDTH);
       state.speed *= 0.985;
       state.yawVelocity *= 0.45;
+      state.recoveryHint = "Guardrail scrape";
     }
 
     if (input.reset) {
@@ -307,9 +322,14 @@ export function createPrototypeScene(
       state.yaw = 0;
       state.yawVelocity = 0;
       state.speed = 12;
+      state.recoveryHint = "Manual reset";
     }
 
     state.distance += state.speed * delta;
+    const courseDistance = state.distance % COURSE_LENGTH;
+    const currentSection =
+      COURSE_SECTIONS.find((section) => courseDistance <= section.maxDistance)?.label ??
+      COURSE_SECTIONS[COURSE_SECTIONS.length - 1].label;
 
     const bob = Math.sin(elapsed * 7 + state.distance * 0.08) * (0.06 + state.speed * 0.0012);
     const pitch = -state.speed * 0.006 - (canBoost ? 0.06 : 0) + (input.brake ? 0.08 : 0);
@@ -360,10 +380,14 @@ export function createPrototypeScene(
     options.onTelemetry({
       boostCharges: state.boostCharges,
       boosting: canBoost,
+      distance: courseDistance,
       drifting,
+      recoveryHint: state.recoveryHint,
+      section: currentSection,
       speedKph: state.speed * 11.2,
       steering: steeringInput,
     });
+    state.recoveryHint = null;
 
     rafId = window.requestAnimationFrame(animate);
   }
