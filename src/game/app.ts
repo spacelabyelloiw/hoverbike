@@ -1,5 +1,6 @@
 import * as THREE from "three";
 
+import { getBuildLabel } from "../buildInfo";
 import { createAudioController } from "./audio/proceduralAudio";
 import { createPrototypeScene, type PrototypeTelemetry } from "./rendering/prototypeScene";
 
@@ -58,6 +59,8 @@ export async function mountApp(root: HTMLDivElement) {
           <span>Boost Shift</span>
           <span>Reset R</span>
         </footer>
+
+        <div class="build-stamp" data-build-stamp></div>
       </div>
     </main>
   `;
@@ -73,6 +76,7 @@ export async function mountApp(root: HTMLDivElement) {
   const distanceValue = shell.querySelector<HTMLElement>("[data-distance]");
   const recoveryValue = shell.querySelector<HTMLElement>("[data-recovery]");
   const progressFill = shell.querySelector<HTMLElement>("[data-progress-fill]");
+  const buildStamp = shell.querySelector<HTMLElement>("[data-build-stamp]");
 
   if (
     !canvas ||
@@ -83,10 +87,13 @@ export async function mountApp(root: HTMLDivElement) {
     !sectionValue ||
     !distanceValue ||
     !recoveryValue ||
-    !progressFill
+    !progressFill ||
+    !buildStamp
   ) {
     throw new Error("Failed to build prototype UI.");
   }
+
+  buildStamp.textContent = getBuildLabel();
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
