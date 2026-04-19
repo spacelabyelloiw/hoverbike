@@ -63,21 +63,6 @@ h1 {
   font-size: 1.02rem;
 }
 
-.primary-action {
-  border: 0;
-  border-radius: 999px;
-  padding: 12px 18px;
-  background: linear-gradient(90deg, #36d3ff, #ff6c98);
-  color: #07111f;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.input-note {
-  color: #8ca8c4;
-  font-size: 0.92rem;
-}
-
 .viewport-frame {
   position: relative;
   overflow: hidden;
@@ -105,12 +90,12 @@ h1 {
 }
 
 .brand-block {
-  max-width: 360px;
+  max-width: 260px;
 }
 
 .brand-block h1 {
   margin-bottom: 0;
-  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
 }
 
 .hud-cluster {
@@ -122,11 +107,11 @@ h1 {
 }
 
 .hud-chip {
-  min-width: 128px;
-  padding: 10px 12px;
-  border-radius: 16px;
-  background: rgba(8, 14, 26, 0.72);
-  border: 1px solid rgba(125, 211, 255, 0.12);
+  min-width: 118px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(8, 14, 26, 0.58);
+  border: 1px solid rgba(125, 211, 255, 0.1);
   backdrop-filter: blur(8px);
 }
 
@@ -143,177 +128,114 @@ h1 {
   font-size: 1rem;
 }
 
-.session-panel {
-  position: absolute;
-  top: 120px;
-  left: 20px;
-  z-index: 1;
-  width: min(320px, calc(100vw - 40px));
-  display: grid;
-  gap: 18px;
+.audio-toggle {
+  border: 1px solid rgba(125, 211, 255, 0.12);
+  border-radius: 14px;
+  padding: 8px 12px;
+  background: rgba(8, 14, 26, 0.58);
+  color: #eef6ff;
+  cursor: pointer;
 }
 
-.session-card,
-.bottom-card {
+.status-panel {
+  position: absolute;
+  top: 110px;
+  left: 20px;
+  z-index: 1;
+  width: min(230px, calc(100vw - 40px));
+  display: grid;
+  gap: 10px;
+}
+
+.status-card,
+.progress-panel {
   border: 1px solid rgba(125, 211, 255, 0.18);
-  background: linear-gradient(180deg, rgba(11, 20, 37, 0.84), rgba(8, 13, 24, 0.84));
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
-  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(11, 20, 37, 0.74), rgba(8, 13, 24, 0.74));
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  border-radius: 18px;
   backdrop-filter: blur(10px);
 }
 
-.session-card {
-  padding: 16px;
+.status-card {
+  padding: 12px 14px;
 }
 
-.session-card-primary {
-  border-color: rgba(255, 126, 71, 0.3);
-}
-
-.session-kicker {
+.status-kicker {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.74rem;
   color: #8ca8c4;
 }
 
-.session-title {
+.status-value {
   display: block;
-  margin-bottom: 8px;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
-.session-copy {
+.status-note {
+  display: block;
+  margin-top: 4px;
   margin-bottom: 0;
   color: #bfd6ef;
+  font-size: 0.86rem;
 }
 
-.bottom-strip {
+.progress-panel {
   position: absolute;
-  inset: auto 20px 18px 20px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.95fr);
-  gap: 16px;
+  left: 20px;
+  right: 20px;
+  bottom: 58px;
   z-index: 1;
+  padding: 12px 14px;
 }
 
-.bottom-card {
-  padding: 18px;
-}
-
-.bottom-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.bottom-head h2 {
-  margin-bottom: 0;
-}
-
-.bottom-head span {
-  color: #8ca8c4;
-  font-size: 0.85rem;
-}
-
-.racer-grid {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.racer-card {
-  padding: 14px;
-  border-radius: 18px;
-  background: rgba(18, 29, 49, 0.95);
-  border: 1px solid rgba(125, 211, 255, 0.1);
-}
-
-.racer-badge {
-  display: inline-flex;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(54, 211, 255, 0.12);
-  color: #8fe8ff;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.racer-role,
-.racer-palette,
-.track-panel p {
-  color: #bfd6ef;
-}
-
-.stat-list {
-  display: grid;
-  gap: 8px;
-}
-
-.stat-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-  font-size: 0.92rem;
-}
-
-.stat-bar {
-  display: flex;
-  gap: 4px;
-}
-
-.stat-segment {
-  width: 18px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.stat-segment.is-active {
-  background: linear-gradient(90deg, #36d3ff, #ff6c98);
-}
-
-.track-title-row {
+.progress-copy {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   align-items: center;
+  margin-bottom: 8px;
 }
 
-.track-pills {
+.progress-value {
+  font-size: 1rem;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #36d3ff, #ff5f93 80%, #ff9b54);
+}
+
+.control-ribbon {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-}
-
-.track-pills span {
-  border-radius: 999px;
-  padding: 6px 10px;
-  font-size: 0.82rem;
-  background: rgba(255, 126, 71, 0.13);
-  color: #ffd0bd;
-}
-
-.controls-list {
-  display: grid;
   gap: 10px;
+  max-width: calc(100vw - 40px);
+  color: #9fb8d2;
+  font-size: 0.86rem;
 }
 
-.controls-list div {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.controls-list span {
-  color: #8ca8c4;
+.control-ribbon span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(8, 14, 26, 0.52);
+  border: 1px solid rgba(125, 211, 255, 0.08);
+  backdrop-filter: blur(8px);
 }
 
 @media (max-width: 1280px) {
@@ -326,40 +248,19 @@ h1 {
     justify-content: flex-start;
   }
 
-  .session-panel {
+  .status-panel {
     top: auto;
     left: 20px;
-    right: 20px;
-    bottom: 188px;
-    width: auto;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: start;
-  }
-
-  .session-card {
-    min-height: 100%;
-  }
-
-  .bottom-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .track-card {
-    order: -1;
+    bottom: 108px;
+    width: min(520px, calc(100vw - 40px));
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 1100px) {
-  .session-panel {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .session-card:first-child {
-    grid-column: 1 / -1;
-  }
-
-  .racer-grid {
-    grid-template-columns: 1fr 1fr;
+  .progress-panel {
+    left: 20px;
+    right: 20px;
   }
 }
 
@@ -368,38 +269,30 @@ h1 {
     inset: 12px 12px auto 12px;
   }
 
-  .session-panel {
-    top: 128px;
+  .status-panel {
+    top: auto;
+    left: 12px;
+    bottom: 118px;
+    width: calc(100vw - 24px);
+    grid-template-columns: 1fr;
+  }
+
+  .progress-panel {
     left: 12px;
     right: 12px;
-    bottom: auto;
-    width: auto;
-    grid-template-columns: 1fr;
-  }
-
-  .bottom-strip {
-    inset: auto 12px 12px 12px;
-    grid-template-columns: 1fr;
-  }
-
-  .racer-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .track-card {
-    order: -1;
+    bottom: 62px;
   }
 
   .hud-chip {
     min-width: calc(50vw - 22px);
   }
 
-  .bottom-card {
-    padding: 14px;
-  }
-
-  .session-card {
-    padding: 14px;
+  .control-ribbon {
+    left: 12px;
+    bottom: 12px;
+    gap: 8px;
+    font-size: 0.8rem;
+    max-width: calc(100vw - 24px);
   }
 }
 
@@ -412,11 +305,12 @@ h1 {
     min-width: 100%;
   }
 
-  .session-panel {
-    top: 172px;
+  .status-panel {
+    bottom: 152px;
   }
 
-  .controls-list div {
-    font-size: 0.92rem;
+  .progress-copy {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
