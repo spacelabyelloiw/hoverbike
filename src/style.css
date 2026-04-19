@@ -81,7 +81,7 @@ h1 {
 .viewport-frame {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 100svh;
   background:
     linear-gradient(180deg, rgba(16, 31, 56, 0.5), rgba(7, 12, 22, 0.95)),
     radial-gradient(circle at top, rgba(255, 126, 71, 0.15), transparent 28%);
@@ -90,7 +90,7 @@ h1 {
 .game-canvas {
   display: block;
   width: 100%;
-  height: 100vh;
+  height: 100svh;
 }
 
 .game-header {
@@ -118,6 +118,7 @@ h1 {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
+  max-width: 100%;
 }
 
 .hud-chip {
@@ -315,16 +316,65 @@ h1 {
   color: #8ca8c4;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1280px) {
+  .game-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hud-cluster {
+    justify-content: flex-start;
+  }
+
+  .session-panel {
+    top: auto;
+    left: 20px;
+    right: 20px;
+    bottom: 188px;
+    width: auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .session-card {
+    min-height: 100%;
+  }
+
+  .bottom-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .track-card {
+    order: -1;
+  }
+}
+
+@media (max-width: 1100px) {
+  .session-panel {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .session-card:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .racer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
   .game-header {
     inset: 12px 12px auto 12px;
   }
 
   .session-panel {
-    top: 104px;
+    top: 128px;
     left: 12px;
     right: 12px;
+    bottom: auto;
     width: auto;
+    grid-template-columns: 1fr;
   }
 
   .bottom-strip {
@@ -338,5 +388,35 @@ h1 {
 
   .track-card {
     order: -1;
+  }
+
+  .hud-chip {
+    min-width: calc(50vw - 22px);
+  }
+
+  .bottom-card {
+    padding: 14px;
+  }
+
+  .session-card {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand-block h1 {
+    font-size: 2rem;
+  }
+
+  .hud-chip {
+    min-width: 100%;
+  }
+
+  .session-panel {
+    top: 172px;
+  }
+
+  .controls-list div {
+    font-size: 0.92rem;
   }
 }
