@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 256" role="img" aria-labelledby="title desc">
+  <title id="title">SkyRush Neon Circuit logo badge</title>
+  <desc id="desc">Generated placeholder logo for the web prototype.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#081225" />
+      <stop offset="100%" stop-color="#101d39" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#36d3ff" />
+      <stop offset="100%" stop-color="#ff5f93" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="256" rx="36" fill="url(#bg)" />
+  <path d="M44 176h172l42-68h210" fill="none" stroke="url(#accent)" stroke-width="18" stroke-linecap="round" />
+  <text x="44" y="112" fill="#edf6ff" font-family="Segoe UI, Trebuchet MS, sans-serif" font-size="52" font-weight="700">SkyRush</text>
+  <text x="44" y="158" fill="#8ccbf5" font-family="Segoe UI, Trebuchet MS, sans-serif" font-size="28" letter-spacing="5">NEON CIRCUIT</text>
+</svg>
