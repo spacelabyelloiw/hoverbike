@@ -342,7 +342,7 @@ export function createPrototypeScene(
 
     const bob = Math.sin(elapsed * 7 + state.distance * 0.08) * (0.06 + state.speed * 0.0012);
     const pitch = -state.speed * 0.006 - (canBoost ? 0.06 : 0) + (input.brake ? 0.08 : 0);
-    const bank = THREE.MathUtils.clamp(-state.yawVelocity * 4.6, -0.75, 0.75) + steeringInput * 0.06;
+    const bank = THREE.MathUtils.clamp(state.yawVelocity * 4.6, -0.75, 0.75) - steeringInput * 0.06;
 
     hoverbike.position.x = THREE.MathUtils.damp(hoverbike.position.x, state.x, 9, delta);
     hoverbike.position.y = 0.86 + bob;
