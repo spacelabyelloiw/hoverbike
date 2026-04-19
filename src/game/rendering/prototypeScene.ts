@@ -216,6 +216,7 @@ export function createPrototypeScene(
   const state = {
     boostCharges: MAX_BOOST_CHARGES,
     distance: 0,
+    lateralVelocity: 0,
     recoveryHint: null as string | null,
     speed: 16,
     x: 0,
@@ -308,18 +309,25 @@ export function createPrototypeScene(
     state.yaw += state.yawVelocity * delta;
     state.yaw *= drifting ? 0.995 : 0.99;
 
-    const lateralVelocity = state.yawVelocity * 5.2 + steeringInput * delta * 3.4;
-    state.x += lateralVelocity;
+    const lateralAcceleration = drifting ? 18 : 12;
+    const lateralDrag = drifting ? 4.2 : 6.4;
+    const steerBias = state.speed * (drifting ? 0.018 : 0.012);
+    state.lateralVelocity += steeringInput * (lateralAcceleration + steerBias) * delta;
+    state.lateralVelocity -= state.lateralVelocity * lateralDrag * delta;
+    state.lateralVelocity += state.yawVelocity * (drifting ? 1.2 : 0.8);
+    state.x += state.lateralVelocity * delta;
 
     if (Math.abs(state.x) > TRACK_HALF_WIDTH) {
       state.x = THREE.MathUtils.clamp(state.x, -TRACK_HALF_WIDTH, TRACK_HALF_WIDTH);
-      state.speed *= 0.985;
+      state.speed *= 0.982;
       state.yawVelocity *= 0.45;
+      state.lateralVelocity *= -0.18;
       state.recoveryHint = "Guardrail scrape";
     }
 
     if (input.reset) {
       state.x = 0;
+      state.lateralVelocity = 0;
       state.yaw = 0;
       state.yawVelocity = 0;
       state.speed = 12;
