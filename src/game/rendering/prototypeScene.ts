@@ -86,7 +86,7 @@ export function createPrototypeScene(
     }),
   );
   loop.rotation.x = Math.PI / 2;
-  loop.position.set(0, 4.6, -12);
+  loop.position.set(0, 4.6, -26);
   scene.add(loop);
 
   const loopPillars = [-5.8, 5.8].map((x) => {
@@ -98,7 +98,7 @@ export function createPrototypeScene(
         emissiveIntensity: 0.35,
       }),
     );
-    pillar.position.set(x, 3.3, -12);
+    pillar.position.set(x, 3.3, -26);
     scene.add(pillar);
     return pillar;
   });
@@ -149,13 +149,13 @@ export function createPrototypeScene(
   boostGlow.position.set(0, -0.02, -1.95);
 
   hoverbike.add(bikeBody, bikeCanopy, hoverGlow, boostGlow);
-  hoverbike.position.set(0, 0.85, 7.2);
+  hoverbike.position.set(0, 0.85, 8.8);
   hoverbike.rotation.y = Math.PI;
   scene.add(hoverbike);
 
   const laneLines = Array.from({ length: 16 }, (_, index) => {
     const line = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.03, 1.8), laneMaterial);
-    line.position.set(0, 0.3, 15 - index * 3.1);
+    line.position.set(0, 0.3, -26 + index * 3.1);
     scene.add(line);
     return line;
   });
@@ -168,7 +168,7 @@ export function createPrototypeScene(
         color: index % 4 === 0 ? "#36d3ff" : "#ff5f93",
       }),
     );
-    marker.position.set(x, 0.36, 12 - index * 2.4);
+    marker.position.set(x, 0.36, -24 + index * 2.4);
     scene.add(marker);
     return marker;
   });
@@ -184,7 +184,7 @@ export function createPrototypeScene(
       }),
     );
     const side = index % 2 === 0 ? -1 : 1;
-    tower.position.set(side * (5.2 + (index % 3) * 1.75), height / 2 - 0.1, 15 - index * 4.4);
+    tower.position.set(side * (5.2 + (index % 3) * 1.75), height / 2 - 0.1, -34 + index * 4.4);
     scene.add(tower);
     return tower;
   });
@@ -198,7 +198,7 @@ export function createPrototypeScene(
         emissiveIntensity: 1.15,
       }),
     );
-    sign.position.set(index % 2 === 0 ? -4.2 : 4.2, 2.25, 10 - index * 7);
+    sign.position.set(index % 2 === 0 ? -4.2 : 4.2, 2.25, -28 + index * 7);
     scene.add(sign);
     return sign;
   });
@@ -348,20 +348,20 @@ export function createPrototypeScene(
     boostGlow.scale.setScalar(canBoost ? 1.45 : 0.95);
 
     laneLines.forEach((line, index) => {
-      line.position.z = 15 - ((state.distance * 1.8 + index * 3.1) % 49);
+      line.position.z = -26 + ((state.distance * 1.8 + index * 3.1) % 49);
     });
 
     sideLights.forEach((marker, index) => {
-      marker.position.z = 12 - ((state.distance * 1.8 + index * 2.4) % 44);
+      marker.position.z = -24 + ((state.distance * 1.8 + index * 2.4) % 44);
     });
 
     skyline.forEach((tower, index) => {
-      tower.position.z = 15 - ((state.distance * 0.9 + index * 4.4) % 78);
+      tower.position.z = -34 + ((state.distance * 0.9 + index * 4.4) % 78);
       tower.rotation.y = elapsed * 0.04 * (index % 2 === 0 ? 1 : -1);
     });
 
     billboards.forEach((sign, index) => {
-      sign.position.z = 10 - ((state.distance * 1.1 + index * 7) % 66);
+      sign.position.z = -28 + ((state.distance * 1.1 + index * 7) % 66);
     });
 
     loop.rotation.z = elapsed * 0.2;
@@ -372,8 +372,12 @@ export function createPrototypeScene(
       pillar.scale.y = 1 + Math.sin(elapsed * 0.6) * 0.02;
     });
 
-    const cameraTarget = new THREE.Vector3(hoverbike.position.x * 0.55, 2.1, hoverbike.position.z - 4.4);
-    const cameraPosition = new THREE.Vector3(hoverbike.position.x * 0.38, 4.9, hoverbike.position.z + 10.2 - state.speed * 0.06);
+    const cameraTarget = new THREE.Vector3(hoverbike.position.x * 0.5, 2.2, hoverbike.position.z - 9.6);
+    const cameraPosition = new THREE.Vector3(
+      hoverbike.position.x * 0.35,
+      5.2,
+      hoverbike.position.z + 8.4 - state.speed * 0.045,
+    );
     camera.position.lerp(cameraPosition, 1 - Math.exp(-5.4 * delta));
     camera.lookAt(cameraTarget);
 
