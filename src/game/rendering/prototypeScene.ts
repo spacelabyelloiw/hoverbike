@@ -202,6 +202,8 @@ export function createPrototypeScene(
     switch (code) {
       case "ArrowUp":
       case "KeyW":
+      case "AltLeft":
+      case "AltRight":
         input.accelerate = active;
         break;
       case "ArrowDown":
@@ -256,14 +258,14 @@ export function createPrototypeScene(
 
     const steeringInput = Number(input.steerRight) - Number(input.steerLeft);
     const drifting = input.drift;
-    const acceleration = input.accelerate ? 15 : 0;
+    const acceleration = input.accelerate ? 17 : 0;
     const braking = input.brake ? 24 : 0;
-    const passiveDrag = state.speed * 0.58;
+    const passiveDrag = state.speed * 0.72;
     const canBoost = input.boost && state.boostCharges > 0.05;
     const boostAcceleration = canBoost ? 26 : 0;
     const maxSpeed = canBoost ? 46 : drifting ? 31 : 36;
 
-    state.speed += (acceleration + boostAcceleration - braking - passiveDrag + 6) * delta;
+    state.speed += (acceleration + boostAcceleration - braking - passiveDrag) * delta;
     state.speed = THREE.MathUtils.clamp(state.speed, 0, maxSpeed);
 
     if (canBoost) {

@@ -54,9 +54,11 @@ export async function mountApp(root: HTMLDivElement) {
         </div>
 
         <footer class="control-ribbon">
+          <span>Throttle Alt</span>
           <span>Steer A/D or arrows</span>
           <span>Drift Space</span>
           <span>Boost Shift</span>
+          <span>Brake S / Down</span>
           <span>Reset R</span>
         </footer>
 
