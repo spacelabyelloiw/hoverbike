@@ -146,10 +146,11 @@ export function createPrototypeScene(
     boostGlowMaterial,
   );
   boostGlow.rotation.x = Math.PI / 2;
-  boostGlow.position.set(0, -0.02, 1.95);
+  boostGlow.position.set(0, -0.02, -1.95);
 
   hoverbike.add(bikeBody, bikeCanopy, hoverGlow, boostGlow);
   hoverbike.position.set(0, 0.85, 7.2);
+  hoverbike.rotation.y = Math.PI;
   scene.add(hoverbike);
 
   const laneLines = Array.from({ length: 16 }, (_, index) => {
@@ -338,7 +339,7 @@ export function createPrototypeScene(
     hoverbike.position.x = THREE.MathUtils.damp(hoverbike.position.x, state.x, 9, delta);
     hoverbike.position.y = 0.86 + bob;
     hoverbike.rotation.x = THREE.MathUtils.damp(hoverbike.rotation.x, pitch, 7, delta);
-    hoverbike.rotation.y = THREE.MathUtils.damp(hoverbike.rotation.y, state.yaw, 9, delta);
+    hoverbike.rotation.y = THREE.MathUtils.damp(hoverbike.rotation.y, Math.PI + state.yaw, 9, delta);
     hoverbike.rotation.z = THREE.MathUtils.damp(hoverbike.rotation.z, bank, 8, delta);
 
     hoverGlow.scale.setScalar(1 + state.speed * 0.008 + (drifting ? 0.12 : 0));
