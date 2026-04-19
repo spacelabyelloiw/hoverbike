@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import RAPIER from "@dimforge/rapier3d-compat";
 
 import { createRacerCards } from "./content/racers";
 import { createTrackSummary } from "./content/tracks";
@@ -7,8 +6,6 @@ import { createAudioController } from "./audio/proceduralAudio";
 import { createPrototypeScene } from "./rendering/prototypeScene";
 
 export async function mountApp(root: HTMLDivElement) {
-  await RAPIER.init();
-
   const shell = document.createElement("div");
   shell.className = "app-shell";
 
