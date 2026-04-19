@@ -1,5 +1,19 @@
 # Implementation Plan
 
+## Current Progress Snapshot
+
+Completed in the current prototype:
+
+- browser-playable movement sandbox
+- keyboard acceleration, braking, steering, drift, boost, and reset
+- chase camera with speed pullback
+- reactive procedural hover audio
+- lightweight HUD for speed, boost, and movement state
+
+Next recommended step:
+
+- convert the endless sandbox into a greybox course with checkpoints and respawn
+
 ## Phase 0: Repo Foundation
 
 - adapt the GDD to a web-specific architecture
